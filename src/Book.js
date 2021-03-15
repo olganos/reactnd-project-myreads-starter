@@ -1,11 +1,7 @@
 import React, {Component} from "react";
+import ShelvesDirectory from "./ShelvesDirectory";
 
 class Book extends Component {
-
-    selectOnClick(event){
-        this.props.onShelfChange(this.props.book, event.target.value)
-    }
-
     render() {
         return (
             <div className="book">
@@ -13,11 +9,11 @@ class Book extends Component {
                     <div className="book-cover" style={{
                         width: 128,
                         height: 188,
-                        backgroundImage: `url(${this.props.book.imageLinks.smallThumbnail})`
+                        backgroundImage: `url(${this.props.book.imageLinks ? this.props.book.imageLinks.smallThumbnail : ''})`
                     }}></div>
                     <div className="book-shelf-changer">
                         <select
-                            value={this.props.book.shelf}
+                            value={this.props.book.shelf ? this.props.book.shelf : ShelvesDirectory.None}
                             onChange={(event) => this.props.onShelfChange(this.props.book, event.target.value)}
                         >
                             <option value="move" disabled>Move to...</option>
@@ -29,10 +25,11 @@ class Book extends Component {
                     </div>
                 </div>
                 <div className="book-title">{this.props.book.title}</div>
-                <div className="book-authors">{this.props.book.authors.join()}</div>
+                <div className="book-authors">{this.props.book.authors ? this.props.book.authors.join() : ''}</div>
             </div>
         )
     }
+
 }
 
 export default Book

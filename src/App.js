@@ -23,7 +23,10 @@ class BooksApp extends React.Component {
         BooksAPI.update(updatingBook, shelf)
             .then(() => {
                 let updatingBookIndex = this.state.myShelves
-                    .indexOf(updatingBook)
+                    .findIndex(inShelf => {
+                            return inShelf.id === updatingBook.id
+                        }
+                    )
                 console.log(updatingBookIndex)
                 if (updatingBookIndex >= 0) {
                     this.setState((currentState) => ({
@@ -46,7 +49,10 @@ class BooksApp extends React.Component {
         return (
             <div className="app">
                 <Route path="/search" render={() =>
-                    <Search/>
+                    <Search
+                        myShelves={this.state.myShelves}
+                        onShelfChange={this.updateBook}
+                    />
                 }/>
                 <Route exact path='/' render={() =>
                     <Shelves
